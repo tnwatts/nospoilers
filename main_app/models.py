@@ -9,6 +9,13 @@ from django.contrib.auth.models import User
 # u = User.objects.get(username='fsmith')
 # freds_department = u.employee.department
 
+import urllib.request
+import json
+with urllib.request.urlopen("https://api.watchmode.com/v1/sources/?apiKey=o3vGEZAd7T47QHGt4xGr37yTiNP9HOJ8RCPGUDJu") as url:
+    data = json.loads(url.read().decode())
+
+
+
 # Create your models here.
 
 SERVICES = [
@@ -19,17 +26,18 @@ SERVICES = [
   ('AP', 'Amazon Prime'),
 ]
 
+class Service(models.Model):
+  services = [service['name'] for service in data]
+  print(services)
+
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
   # favorite_color = models.CharField(max_length=50)
-  services = models.CharField(
-    max_length=len(SERVICES),
-    choices=SERVICES,
-    default=SERVICES[0][0]
-  )
+  services =  models.ManyToManyField(Service)
   # genres
   def __str__(self):
         return self.user.username
 
   def get_absolute_url(self):
     return reverse('profile_form', kwargs={'pk': self.id})
+
