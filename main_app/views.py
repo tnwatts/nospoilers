@@ -12,6 +12,12 @@ from .models import Profile
 # Add the following import
 from django.http import HttpResponse
 
+import urllib.request
+import json
+with urllib.request.urlopen("https://api.watchmode.com/v1/sources/?apiKey=o3vGEZAd7T47QHGt4xGr37yTiNP9HOJ8RCPGUDJu") as url:
+    data = json.loads(url.read().decode())
+
+
 # Define the home view
 def home(request):
     return render(request, 'home.html')
@@ -39,7 +45,7 @@ def signup(request):
     else:
       error_message = 'Invalid sign up - try again'
   form = UserCreationForm()
-  context = {'form': form, 'error_message': error_message}
+  context = {'form': form, 'error_message': error_message, 'data' : data}
   return render(request, 'registration/signup.html', context)
 
 
