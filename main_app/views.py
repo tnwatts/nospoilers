@@ -15,6 +15,7 @@ import urllib.request
 import json
 with urllib.request.urlopen("https://api.watchmode.com/v1/sources/?apiKey=o3vGEZAd7T47QHGt4xGr37yTiNP9HOJ8RCPGUDJu") as url:
     data = json.loads(url.read().decode())
+    data = data[:10]
 
 
 
@@ -33,7 +34,7 @@ def signup(request):
     if form.is_valid():
       # add user to db
       user = form.save()
-      Profile.objects.create(user_id=user.id)
+      Profile.objects.create(user_id=user.id, id=user.id)
       # automatically log in the new user
       login(request, user)
       # redirect to profile page with profile id -> redirect('profile', user_id=user_id)
@@ -47,18 +48,26 @@ def signup(request):
 # def profile(request):
 #     return render(request, 'profile.html')
 
+
+
 class ProfileUpdate(UpdateView):
   model = Profile
-  extra_context={'serviceList': Service.objects.all()}
+  extra_context = {'serviceList': Service.objects.all(), }
   fields =  ['services']
 
+  def get_available(self):
+    profile_id = self.request.user.pk
+    profile = Profile.objects.get(id=profile_id)
+    id_list = profile.services.all().values_list('id')
+    services_profile_doesnt_have = Service.objects.exclude(id__in=id_list)
+    return services_profile_doesnt_have
 
-def assoc_services(request, profile_id, service_id):
-  profile = Profile.objects.get(id=profile_id)
-  profile.service.add(service_id)
-  return redirect('profile_update', profile_id=profile_id)
+def assoc_services(request, pk, service_id):
+  profile = Profile.objects.get(id=pk)
+  profile.services.add(service_id)
+  return redirect('profile_update', pk=pk)
 
-def unassoc_services(request, profile_id, service_id):
-  profile = Profile.objects.get(id=profile_id)
-  profile.service.remove(service_id)
-  return redirect('profile_update', profile_id=profile_id)
+def unassoc_services(request, pk, service_id):
+  profile = Profile.objects.get(id=pk)
+  profile.services.remove(service_id)
+  return redirect('profile_update', pk=pk)

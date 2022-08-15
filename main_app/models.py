@@ -24,9 +24,9 @@ class Service(models.Model):
   api_id = models.CharField(max_length=6)
   logo = models.CharField(max_length=120)
   def __str__(self):
-        return f"{self.name} {self.api_id}{self.logo}"
+        return f"{self.name} {self.api_id} {self.logo}"
   def get_absolute_url(self):
-      return reverse('service_detail', kwargs={'pk': self.id})
+      return reverse('service_detail', kwargs={'service_id': self.id})
 
 
 # try:
@@ -36,11 +36,12 @@ class Service(models.Model):
 
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
+  id = models.IntegerField(primary_key=True)
   services = models.ManyToManyField(Service)
 
   def __str__(self):
-        return self.user.username
+      return self.user.username
 
   def get_absolute_url(self):
-    return reverse('profile_update', kwargs={'pk': self.id})
+      return reverse('profile_update', kwargs={'profile_id': self.id})
 
