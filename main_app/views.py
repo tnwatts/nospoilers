@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 # import the login_required decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Profile, Service
+from .models import Profile, Service, Group
 
 # Add the following import
 from django.http import HttpResponse
@@ -71,3 +71,7 @@ def unassoc_services(request, pk, service_id):
   profile = Profile.objects.get(id=pk)
   profile.services.remove(service_id)
   return redirect('profile_update', pk=pk)
+
+class GroupCreate(CreateView):
+  model = Group
+  fields = '__all__'

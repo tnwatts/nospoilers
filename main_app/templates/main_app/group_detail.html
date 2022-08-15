@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Group PAGEt</h1>
+
+
+<a href="{% url '_detail' group.id %}">
+    <div class="card">
+        <div class="card-body">
+            <span class="card-header">{{ group.creater }}</span>
+            <p class="card-text">Color: {{ group.members }}</p>
+        </div>
+    </div>
+</a>
+{% endfor %}
+
+{% endblock %}
