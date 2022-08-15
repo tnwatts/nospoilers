@@ -3,20 +3,42 @@
     <div>
         <h1>This is the profile page for {{user.username}}</h1>
     </div>
-    <form action="" method="post">
-        <!-- Django requires the following for security purposes -->
-        {% csrf_token %}
-        <table class=" lifted">
-          <!-- Render the inputs inside of <tr>s & <td>s -->
-          {{ form.as_table }}
-        </table>
-        <input type="submit" value="Submit!" class="btn  lifted">
-    </form>
+    {% if profile.services.count %}
+      {% for service in profile.services.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-text">
+                <img src="{{service.logo}}">
+            </span>
+          </div>
+          
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>This profile has no services associated.</h5>
+    {% endif %}
 
+    <div class="col-6">
+        <h3>Available Services</h3>
+        {% if serviceList.count %}
+        {% for service in serviceList.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-header">
+                <img src="{{ service.logo }}">
+            </span>
+          </div>
+          <div class="card">
+            <form action="{% url 'assoc_services' profile.id service.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
 <script>
     const trs = document.querySelectorAll('tr')
-    //console.log(trs)
-    //trs.setAttribute('class','bg-secondary')
     trs.forEach(function(tr) {
         tr.setAttribute('class','input-group-text bg-primary light-text')
     })
