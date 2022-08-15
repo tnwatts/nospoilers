@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 
 # You can access the related information using Django's standard related model conventions:
 # u = User.objects.get(username='fsmith')
@@ -13,31 +14,33 @@ import urllib.request
 import json
 with urllib.request.urlopen("https://api.watchmode.com/v1/sources/?apiKey=o3vGEZAd7T47QHGt4xGr37yTiNP9HOJ8RCPGUDJu") as url:
     data = json.loads(url.read().decode())
-
-
+    data = data[:10]
 
 # Create your models here.
 
-SERVICES = [
-  # replace with services model objects
-  ('NF', 'Netflix'),
-  ('HU', 'Hulu'),
-  ('HM', 'HBO Max'),
-  ('AP', 'Amazon Prime'),
-]
 
 class Service(models.Model):
-  services = [service['name'] for service in data]
-  print(services)
+  name = models.CharField(max_length=50)
+  api_id = models.CharField(max_length=6)
+  logo = models.CharField(max_length=120)
+  def __str__(self):
+        return f"{self.name} {self.api_id}{self.logo}"
+  def get_absolute_url(self):
+      return reverse('service_detail', kwargs={'pk': self.id})
+
+
+# try:
+#    obj = Service.objects.get(pk=1)
+# except Service.DoesNotExist:
+  
 
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
-  # favorite_color = models.CharField(max_length=50)
-  services =  models.ManyToManyField(Service)
-  # genres
+  services = models.ManyToManyField(Service)
+
   def __str__(self):
         return self.user.username
 
   def get_absolute_url(self):
-    return reverse('profile_form', kwargs={'pk': self.id})
+    return reverse('profile_update', kwargs={'pk': self.id})
 
