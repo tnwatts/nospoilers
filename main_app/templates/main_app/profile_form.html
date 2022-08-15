@@ -1,51 +1,51 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="row">
-      <div class="col s6">
-        <h1>This is the profile page for {{user.username}}</h1>
-        {% if profile.services.count %}
-        {% for service in profile.services.all %}
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">
-              <img src="{{service.logo}}">
-            </span>
-          </div>
-          <div class="card-action">
-            <form action="{% url 'unassoc_services' profile.id service.id %}" method="POST">
-              {% csrf_token %}
-              <button type="submit" class="btn">Remove</button>
-            </form>
-          </div>
-        </div>
-        {% endfor %}
-        {% else %}
-        <h5>No Services :(</h5>
-        {% endif %}
+<div class="row">
+  <div class="col s6">
+    <h1>This is the profile page for {{user.username}}</h1>
+    {% if profile.services.count %}
+    {% for service in profile.services.all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <img src="{{service.logo}}">
+        </span>
       </div>
-
-    <div class="col s6">
-        <h3>Available Services</h3>
-        {% if get_available().count %}
-        {% for service in get_available().all %}
-        <div class="card">
-          <div class="card-content">
-            <span class="card-header">
-                <img src="{{ service.logo }}">
-            </span>
-            <form action="{% url 'assoc_services' profile.id service.id %}" method="POST">
-              {% csrf_token %}
-              <button type="submit" class="btn">Add</button>
-            </form>
-        </div>
+      <div class="card-action">
+        <form action="{% url 'unassoc_services' profile.id service.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn">Remove</button>
+        </form>
+      </div>
     </div>
-      {% endfor %}
-      {% endif %} 
-<script>
-    const trs = document.querySelectorAll('tr')
-    trs.forEach(function(tr) {
-        tr.setAttribute('class','input-group-text bg-primary light-text')
-    })
-</script>
+    {% endfor %}
+    {% else %}
+    <h5>No Services :(</h5>
+    {% endif %}
+  </div>
+  <a href=""></a>
+  <div class="col s6">
+    <h3>Available Services</h3>
+    {% if get_available().count %}
+    {% for service in get_available().all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-header">
+          <img src="{{ service.logo }}">
+        </span>
+        <form action="{% url 'assoc_services' profile.id service.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn">Add</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <script>
+      const trs = document.querySelectorAll('tr')
+      trs.forEach(function (tr) {
+        tr.setAttribute('class', 'input-group-text bg-primary light-text')
+      })
+    </script>
 
-{% endblock %}
+    {% endblock %}
