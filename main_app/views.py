@@ -77,4 +77,13 @@ def create_group(request, profile_id):
 
 def group_home(request, group_id):
   group = Group.objects.get(id=group_id)
+ 
   return render(request, 'group/home.html', {'group' : group})
+
+def assoc_accounts(request, profile_id):
+  data = request.POST['pin']
+  group_name = request.POST['name']
+  group = Group.objects.get(pin=data, name=group_name)
+  group.users.add(profile_id)
+  return redirect('group_home', group_id=group.id)
+

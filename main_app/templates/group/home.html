@@ -4,7 +4,18 @@
 <h1>Group PAGE</h1>
 
 
-
+{{ group.name }}
+<h4 class="col-8 light-background dark-text lifted rounded-2 p-2 m-2 mx-auto">
+    The group owner is <span class="text-uppercase">{{ group.creator }}</span>!
+</h4>
+<h6>Group Members:</h6>
+{% for user in group.users.all %}
+<div class="d-flex flex-column input-group-text lifted p-0 m-0 h-75">
+    <div class="h-100 my-1">
+        {{ user }}
+    </div>
+</div>
+{% endfor %}
 
 
 
