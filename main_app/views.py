@@ -40,9 +40,6 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-# def profile(request):
-#     return render(request, 'profile.html')
-
 
 
 def profile(request, profile_id):
@@ -70,10 +67,6 @@ def unassoc_services(request, profile_id, service_id):
   profile.services.remove(service_id)
   return redirect('profile', profile_id=profile_id)
 
-
-# class GroupCreate(CreateView):
-#   model = Group
-#   fields = '__all__'
 
 
 def create_group(request, profile_id):
