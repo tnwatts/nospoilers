@@ -3,19 +3,14 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-# import the login_required decorator
+from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Profile, Service, Group
 
+
 # Add the following import
 from django.http import HttpResponse
-
-import urllib.request
-import json
-with urllib.request.urlopen("https://api.watchmode.com/v1/sources/?apiKey=o3vGEZAd7T47QHGt4xGr37yTiNP9HOJ8RCPGUDJu") as url:
-    data = json.loads(url.read().decode())
-    data = data[:10]
 
 
 
@@ -42,7 +37,7 @@ def signup(request):
     else:
       error_message = 'Invalid sign up - try again'
   form = UserCreationForm()
-  context = {'form': form, 'error_message': error_message, 'data' : data}
+  context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
 # def profile(request):
@@ -50,28 +45,43 @@ def signup(request):
 
 
 
-class ProfileUpdate(UpdateView):
-  model = Profile
-  extra_context = {'serviceList': Service.objects.all(), }
-  fields =  ['services']
+def profile(request, profile_id):
+  profile = Profile.objects.get(id=profile_id)
+  serviceList=  Service.objects.all()
+  services_ids = profile.services.all().values_list('id')
+  services = Service.objects.exclude(id__in=services_ids)
+  try:
+    group = Group.objects.get(creator = profile)
+    
+  except:
+    group = ''
+  
+  return render(request, 'profile.html',{'profile' : profile, 'serviceList' : serviceList, 'unowned_services' : services, 'group':group})
 
-  def get_available(self):
-    profile_id = self.request.user.pk
-    profile = Profile.objects.get(id=profile_id)
-    id_list = profile.services.all().values_list('id')
-    services_profile_doesnt_have = Service.objects.exclude(id__in=id_list)
-    return services_profile_doesnt_have
 
-def assoc_services(request, pk, service_id):
-  profile = Profile.objects.get(id=pk)
+def assoc_services(request, profile_id, service_id):
+  profile = Profile.objects.get(id=profile_id)
   profile.services.add(service_id)
-  return redirect('profile_update', pk=pk)
+  return redirect('profile', profile_id=profile_id)
 
-def unassoc_services(request, pk, service_id):
-  profile = Profile.objects.get(id=pk)
+
+def unassoc_services(request, profile_id, service_id):
+  profile = Profile.objects.get(id=profile_id)
   profile.services.remove(service_id)
-  return redirect('profile_update', pk=pk)
+  return redirect('profile', profile_id=profile_id)
 
-class GroupCreate(CreateView):
-  model = Group
-  fields = '__all__'
+
+# class GroupCreate(CreateView):
+#   model = Group
+#   fields = '__all__'
+
+
+def create_group(request, profile_id):
+  data = request.POST['pin']
+  group = Group.objects.create( name="Group", creator_id=profile_id, pin=data)
+  return redirect('group_home', group_id=group.id)
+
+
+def group_home(request, group_id):
+  group = Group.objects.get(id=group_id)
+  return render(request, 'group/home.html', {'group' : group})
