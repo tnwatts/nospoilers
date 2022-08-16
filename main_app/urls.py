@@ -13,6 +13,9 @@ urlpatterns = [
     path('group/<int:group_id>/', views.group_home, name='group_home'),
     # path('accounts/<int:pk>/add_group/', views.add_group, name='add_group'),
     path('group/<int:profile_id>/create/', views.create_group, name='create_group'),
+    # path('group/<int:profile_id>/join/', views.join_group, name='join_group'),
+    path('group/<int:profile_id>/assoc_accounts/', views.assoc_accounts, name='assoc_accounts'),
+    # path('group/<int:group_id>/assoc_unaccounts/<int:profile_id>/', views.unassoc_accounts, name='unassoc_accounts'),
     # path('groups/<int:pk>/update/', views.GroupUpdate.as_view(), name='groups_update'),
     # path('groups/<int:pk>/delete/', views.GroupDelete.as_view(), name='groups_delete'),
 ]
