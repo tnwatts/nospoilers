@@ -26,9 +26,11 @@
     {% csrf_token %}
     <div class="d-flex flex-column justify-content-between input-group-text dark-background lifted p-0 m-1 h-75">
 
+
       <img class="h-100 my-0 p-0 border border-1 rounded-2 border-secondary " src="{{ service.logo }}">
       <button type="submit" class="btn btn-sm bg-dark bt-outline btn-outline-warning h-100 m-0 p-0">Add</button>
     </div>
+
   </form>
   {% endfor %}
 
