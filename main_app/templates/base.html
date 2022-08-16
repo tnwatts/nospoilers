@@ -8,38 +8,40 @@
   <title>No SPOILERS</title>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg light-background">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BioRhyme&family=Exo+2:wght@300&family=Lobster&display=swap" rel="stylesheet">
+<body class=" light-backgroundg">
+    <nav class="navbar navbar-expand-lg dark-background light-text mb-3 lifted p-0 rounded-2" >
+        <div class="container py-3 rounded-2 " style="background-image: url('https://s3-us-west-2.amazonaws.com/prd-rteditorial/wp-content/uploads/2018/03/13153742/RT_300EssentialMovies_700X250.jpg') ;">
+          <button class="navbar-toggler lighten-area" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-              <li><a href="{% url 'home' %}">Home</a>
-              </li>
-              <li><a href="{% url 'about' %}">About</a></li>
-              {% if user.is_authenticated %}
-                <li><a href="{% url 'logout' %}">Log Out</a></li>
-                <li><a href="{% url 'profile' user.id %}">Profile</a></li>
-              {% else %}
-                <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                <li><a href="{% url 'login' %}">Log In</a></li>
-              {% endif %}
-            </ul>
+          <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav light-text ">
+              <li class="nav-item ">
+                <li class="m-1"><a class="light-text  darken-area text-decoration-none " href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="m-1"><a class="light-text m-1 text-decoration-none darken-area" href="{% url 'about' %}">About</a></li>
+                {% if user.is_authenticated %}
+                <li class="m-1"><a class="light-text m-1 text-decoration-none darken-area " href="{% url 'logout' %}">Log Out</a></li>
+                <li class="m-1"><a class="light-text m-1 text-decoration-none darken-area" href="{% url 'profile' user.id %}">Profile</a></li>
+                {% else %}
+                <li class="m-1"><a class="light-text m-1 text-decoration-none darken-area" href="{% url 'signup' %}">Sign Up</a></li>
+                <li class="m-1"><a class="light-text m-1 text-decoration-none darken-area" href="{% url 'login' %}">Log In</a></li>
+                {% endif %}
+              </ul>
+            </div>
           </div>
-        </div>
+          <div class="col-3 light-text border  ms-5 mx-2 film-back rounded-2 text-center align-items-center"><h2 class="m-0 py-2 darken-area fw-bolder">No Spoilers Dot Com</h2></div>
       </nav>
 
-  <main class="container">
+  <main class="col-11 mx-auto rounded-2 dark-background lifted p-1 m-1 mb-3 light-text">
     {% block content %}
     {% endblock %}
   </main>
 
-  <footer class="page-footer">
+  <footer class="page-footer light-backgroundg">
     <div class="right">All Rights Reserved, &copy; 2022 No Spoilers &nbsp;</div>
   </footer>
 </body>
