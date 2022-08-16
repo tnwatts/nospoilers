@@ -1,12 +1,10 @@
 from django.contrib import admin
 # import your models here
-from .models import Profile, Service
+from .models import Profile, Service, Group
 
 import urllib.request
 import json
-with urllib.request.urlopen("https://api.watchmode.com/v1/sources/?apiKey=o3vGEZAd7T47QHGt4xGr37yTiNP9HOJ8RCPGUDJu") as url:
-    data = json.loads(url.read().decode())
-    data = data[:10]
+
 
 
 
@@ -17,6 +15,9 @@ service_logos = []
 
 @admin.action(description='Propogate Service Model')
 def make_services(modeladmin, request, queryset):
+    with urllib.request.urlopen("https://api.watchmode.com/v1/sources/?apiKey=aSCkJNtfVnoaKWF2pphepbN97N7qdOtkvdxE4N4h") as url:
+        data = json.loads(url.read().decode())
+    data = data[:20]
     for d in data:
         service_names.append(d['name'])
         service_ids.append(d['id'])
@@ -31,4 +32,5 @@ def make_services(modeladmin, request, queryset):
 # Register your models here
 admin.site.register(Profile)
 admin.site.register(Service)
+admin.site.register(Group)
 admin.site.add_action(make_services)
