@@ -10758,6 +10758,8 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+/* Tay's Classes */
 .fill {
   overflow: hidden;
   background-size: cover;

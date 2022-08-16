@@ -17,6 +17,15 @@
 </div>
 {% endfor %}
 
+<h6>Group Services:</h6>
+{% for service in group.services.all %}
+<div class="d-flex flex-column input-group-text lifted p-0 m-0 h-75">
+    <div class="h-100 my-1">
+        {{ service.name }}
+    </div>
+</div>
+{% endfor %}
+
 
 
 {% endblock %}

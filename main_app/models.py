@@ -43,6 +43,7 @@ class Group(models.Model):
   users = models.ManyToManyField(User)
   creator = models.OneToOneField(Profile, on_delete=models.CASCADE)
   pin = models.IntegerField(default=0000)
+  services = models.ManyToManyField(Service)
   def __str__(self):
     return f"{self.name}"
   def get_absolute_url(self):

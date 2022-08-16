@@ -1,3 +1,4 @@
+from http import server
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
@@ -71,13 +72,21 @@ def unassoc_services(request, profile_id, service_id):
 
 def create_group(request, profile_id):
   data = request.POST['pin']
-  group = Group.objects.create( name="Group", creator_id=profile_id, pin=data)
+  group_name = request.POST['name']
+  group = Group.objects.create( name=group_name, creator_id=profile_id, pin=data)
+  # retrieve services of creator for group's common services
+  profile = Profile.objects.get(id=profile_id)
+  services = profile.services.all()
+  for service in services:
+    group.services.add(service)
+  print(group.services.all())
+  # for service in group.services.all():
+  #   print(service)
   return redirect('group_home', group_id=group.id)
 
 
 def group_home(request, group_id):
   group = Group.objects.get(id=group_id)
- 
   return render(request, 'group/home.html', {'group' : group})
 
 def assoc_accounts(request, profile_id):
@@ -85,5 +94,20 @@ def assoc_accounts(request, profile_id):
   group_name = request.POST['name']
   group = Group.objects.get(pin=data, name=group_name)
   group.users.add(profile_id)
+  # code below to determine group's common services
+
+  # for each new user, loop through their services and check if its in the group's services already
+  profile = Profile.objects.get(id=profile_id)
+  # profile_services = profile.services.all()
+  group_services = group.services.all()
+  profile_services_ids = profile.services.all().values_list('id')
+  services_not_in_profile = Service.objects.exclude(id__in=profile_services_ids)
+  for service in services_not_in_profile:
+    if service in group_services:
+      group.services.remove(service)
+ 
+  print(group.services.all())
+
+
   return redirect('group_home', group_id=group.id)
 
