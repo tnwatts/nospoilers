@@ -1,5 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+<style>
+  .add-remove {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    font-size: 90px;
+    opacity: 0;
+    padding-top: 0;
+    line-height: 0;
+  }
+
+  .add-remove:hover {
+    opacity: 80%;
+  }
+
+</style>
 <div class="col-6 mx-auto">
   <h1>This is the profile page for {{user.username}}</h1>
   {% if profile.services.all %}
@@ -8,19 +25,20 @@
     <h4>No Services :(</h4>
   {% endif %}
 </div>
+
 <div class="d-flex flex-row light-background align-items-center flex-wrap p-1">
 
   {% for service in profile.services.all %}
   <form action="{% url 'unassoc_services' profile.id service.id %}" method="POST" class="m-1">
     {% csrf_token %}
-    <div class="d-flex flex-column justify-content-between input-group-text dark-background lifted p-0 m-1 h-75">
-      <button type="submit" class="btn btn-sm bg-dark bt-outline btn-outline-warning h-100 m-0 p-0">
-        <img class="h-100 my-0 p-0 border border-1 rounded-2 border-secondary " src="{{service.logo}}">
-      </button>
+    <div class="d-flex flex-column justify-content-between dark-background lifted p-0 m-1 h-75 container">
+      <img class="h-100 my-0 p-0 border border-1 rounded-2 border-secondary " src="{{service.logo}}">
+      <button class="btn btn-warning btn-outline-warning my-auto add-remove">X</button>
     </div>
   </form>
   {% endfor %}
 </div>
+
 <h3>Available Services</h3>
 
 <div class="d-flex flex-row light-background align-items-center flex-wrap p-1">
@@ -29,17 +47,31 @@
 
   <form action="{% url 'assoc_services' profile.id service.id %}" method="POST" class=" m-1 ">
     {% csrf_token %}
-    <div class="d-flex flex-column justify-content-between input-group-text dark-background lifted p-0 m-1 h-75">
-
-      <button type="submit" class="btn btn-sm bg-dark bt-outline btn-outline-warning h-100 m-0 p-0">
-        <img class="h-100 my-0 p-0 border border-1 rounded-2 border-secondary " src="{{ service.logo }}">
-      </button>
+    <div class="d-flex flex-column justify-content-between dark-background lifted p-0 m-1 h-75 container">
+      <img class="h-100 my-0 p-0 border border-1 rounded-2 border-secondary " src="{{service.logo}}">
+      <button class="btn btn-danger btn-outline-danger my-auto add-remove">+</button>
     </div>
 
   </form>
   {% endfor %}
 
 </div>
+
+<h4>Joined Groups:</h4>
+{% for group in user.group_set.all %}
+<div class="col-6 align-items-start justify-content-left">
+    <div class="d-flex align-items-center flex-row h-25 ">
+        <div class="col-3">
+            <div class="d-flex flex-row align-items-center">
+                <img class="col-4 p-0 m-0 img-fluid " src="{% static 'imgs/tv.png' %}">
+                <a href="{{ group.get_absolute_url }}" class="col-6 text-nowrap flex-row align-middle align-items-center justify-content-start p-0 m-0">{{ group.name }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<h4>Groups I Created:</h4>
 {% if group %}
 <a href="{{ group.get_absolute_url }}">{{ group.name }}</a>
 {% else %}

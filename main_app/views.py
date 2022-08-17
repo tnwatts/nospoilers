@@ -111,3 +111,7 @@ def assoc_accounts(request, profile_id):
 
   return redirect('group_home', group_id=group.id)
 
+
+class GroupDelete(DeleteView, LoginRequiredMixin):
+  model = Group
+  success_url = '/'

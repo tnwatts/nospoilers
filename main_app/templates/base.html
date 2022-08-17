@@ -15,29 +15,30 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=BioRhyme&family=Exo+2:wght@300&family=Lobster&display=swap" rel="stylesheet">
-<body class=" light-backgroundg">
-    <nav class="navbar navbar-expand-lg dark-background light-text mb-3 lifted p-0 rounded-2" >
-        <div class="container py-3 rounded-2 " style="background-image: url('https://s3-us-west-2.amazonaws.com/prd-rteditorial/wp-content/uploads/2018/03/13153742/RT_300EssentialMovies_700X250.jpg') ;">
+</head>
+<body class="container-fluid p-0 m-0 light-backgroundg">
+    <nav class="navbar navbar-expand-sm dark-background light-text mb-3 lifted p-0 rounded-2" >
+        <div class="container py-3  rounded-2 me-5" style="background-image: url('https://s3-us-west-2.amazonaws.com/prd-rteditorial/wp-content/uploads/2018/03/13153742/RT_300EssentialMovies_700X250.jpg') ;">
           <button class="navbar-toggler lighten-area" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse " id="navbarNav">
             <ul class="navbar-nav light-text ">
               <li class="nav-item ">
-                <li class="m-1"><a class="light-text  darken-area text-decoration-none " href="{% url 'home' %}">Home</a>
+                <li class="col-3"><a class="light-text my-0  darken-area text-decoration-none" href="{% url 'home' %}">Home</a>
                 </li>
-                <li class="m-1"><a class="light-text m-1 text-decoration-none darken-area" href="{% url 'about' %}">About</a></li>
+                <li class="col-3"><a class="light-text m-2  text-decoration-none darken-area" href="{% url 'about' %}">About</a></li>
                 {% if user.is_authenticated %}
-                <li class="m-1"><a class="light-text m-1 text-decoration-none darken-area " href="{% url 'logout' %}">Log Out</a></li>
-                <li class="m-1"><a class="light-text m-1 text-decoration-none darken-area" href="{% url 'profile' user.id %}">Profile</a></li>
+                <li class="col-3"><a class="light-text m-2 text-nowrap text-decoration-none darken-area " href="{% url 'logout' %}">Log Out</a></li>
+                <li class="col-3"><a class="light-text m-2 text-nowrap text-decoration-none darken-area" href="{% url 'profile' user.id %}">Profile</a></li>
                 {% else %}
-                <li class="m-1"><a class="light-text m-1 text-decoration-none darken-area" href="{% url 'signup' %}">Sign Up</a></li>
-                <li class="m-1"><a class="light-text m-1 text-decoration-none darken-area" href="{% url 'login' %}">Log In</a></li>
+                <li class="col-3"><a class="light-text m-2 text-nowrap text-decoration-none darken-area" href="{% url 'signup' %}">Sign Up</a></li>
+                <li class="col-3"><a class="light-text m-2 text-nowrap text-decoration-none darken-area" href="{% url 'login' %}">Log In</a></li>
                 {% endif %}
               </ul>
             </div>
           </div>
-          <div class="col-3 light-text border  ms-5 mx-2 film-back rounded-2 text-center align-items-center"><h2 class="m-0 py-2 darken-area fw-bolder">No Spoilers Dot Com</h2></div>
+          <div class="col-4 light-text border  px-auto mx-auto py-2 my-auto film-back rounded-2 text-center align-items-center"><h2 class="m-0 py-2 darken-area fw-bolder">No Spoilers Dot Com</h2></div>
       </nav>
 
 
