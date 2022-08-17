@@ -10758,7 +10758,6 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-
 /* Tay's Classes */
 .fill {
   overflow: hidden;
@@ -10855,6 +10854,21 @@ textarea.form-control-lg {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+/* sashanks classes */
+.add-remove {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  font-size: 90px;
+  opacity: 0;
+  padding-top: 0;
+  line-height: 0;
+}
+
+.add-remove:hover {
+  opacity: 80%;
 }
 
 /*# sourceMappingURL=style.css.map */

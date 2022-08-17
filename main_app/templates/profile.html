@@ -1,22 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<style>
-  .add-remove {
-    position: absolute;
-    width: 110px;
-    height: 110px;
-    font-size: 90px;
-    opacity: 0;
-    padding-top: 0;
-    line-height: 0;
-  }
 
-  .add-remove:hover {
-    opacity: 80%;
-  }
-
-</style>
 <div class="col-6 mx-auto">
   <h1>This is the profile page for {{user.username}}</h1>
   {% if profile.services.all %}
