@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <h1>Group <span class="text-warning">{{ group.name }}</span></h1>
+
 <h4 class="col-8 light-background dark-text lifted rounded-2 p-2 m-2 mx-auto">
     The group owner is <span class="text-uppercase">{{ group.creator }}</span>!
 </h4>
@@ -18,6 +20,7 @@
 <div class="d-flex flex-column input-group-text lifted p-0 m-0 h-75">
     <div class="h-100 my-1">
         {{ service.name }}
+
     </div>
 </div>
 {% endfor %}
@@ -34,6 +37,7 @@
             allowfullscreen></iframe>
     </div>
 </div>
+
 <article class="mx-auto my-auto">{{ show.plot_overview }}</article>
 {% if group.creator == user.profile %}
 <a href="{% url 'group_delete' group.id %}">Delete Group</a>

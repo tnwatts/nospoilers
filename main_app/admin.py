@@ -1,7 +1,7 @@
 from django.contrib import admin
 # import your models here
 from .models import Profile, Service, Group
-
+import os
 import urllib.request
 import json
 
@@ -15,7 +15,8 @@ service_logos = []
 
 @admin.action(description='Propogate Service Model')
 def make_services(modeladmin, request, queryset):
-    with urllib.request.urlopen("https://api.watchmode.com/v1/sources/?apiKey=aSCkJNtfVnoaKWF2pphepbN97N7qdOtkvdxE4N4h") as url:
+    watchmode_api_key = os.environ['WATCHMODE_API_KEY']
+    with urllib.request.urlopen(f"https://api.watchmode.com/v1/sources/?apiKey={watchmode_api_key}") as url:
         data = json.loads(url.read().decode())
     data = data[:20]
     for d in data:
