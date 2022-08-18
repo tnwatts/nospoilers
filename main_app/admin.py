@@ -29,6 +29,7 @@ def make_services(modeladmin, request, queryset):
 
 
 
+
 # Register your models here
 admin.site.register(Profile)
 admin.site.register(Service)
