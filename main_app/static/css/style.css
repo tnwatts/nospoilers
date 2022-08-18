@@ -10833,13 +10833,13 @@ textarea.form-control-lg {
 }
 
 .lighten-area {
-  background-color: rgba(255, 255, 255, 0.561);
+  background-color: rgba(233, 246, 246, 0.521);
   border-radius: 5px;
   padding: 0.7vmin 1.2vmin;
 }
 
 .darken-area {
-  background-color: rgba(0, 0, 0, 0.593);
+  background-color: rgba(0, 0, 0, 0.616);
   border-radius: 5px;
   padding: 0.7vmin 1.2vmin;
 }
