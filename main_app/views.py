@@ -6,7 +6,7 @@ from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Profile, Service, Group
-
+import os
 import urllib.request
 import json
 
@@ -83,10 +83,11 @@ def create_group(request, profile_id):
 def group_home(request, group_id):
   group = Group.objects.get(id=group_id)
   api_id = group.services.all().values_list('api_id')
-  with urllib.request.urlopen(f"https://api.watchmode.com/v1/list-titles/?apiKey=aSCkJNtfVnoaKWF2pphepbN97N7qdOtkvdxE4N4h&source_ids={api_id[0]}&sort_by=popularity_desc&types=tv_series") as url:
+  watchmode_api_key = os.environ['WATCHMODE_API_KEY']
+  with urllib.request.urlopen(f"https://api.watchmode.com/v1/list-titles/?apiKey={watchmode_api_key}&source_ids={api_id[0]}&sort_by=popularity_desc&types=tv_series") as url:
     data = json.loads(url.read().decode())
   show = data['titles'][0]
-  with urllib.request.urlopen(f"https://api.watchmode.com/v1/title/{show['id']}/details/?apiKey=aSCkJNtfVnoaKWF2pphepbN97N7qdOtkvdxE4N4h") as url:
+  with urllib.request.urlopen(f"https://api.watchmode.com/v1/title/{show['id']}/details/?apiKey={watchmode_api_key}") as url:
     data = json.loads(url.read().decode())
     print(data)
   show_details = data
