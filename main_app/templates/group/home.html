@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Group PAGE</h1>
+<h1>Group <span class="text-warning">{{ group.name }}</span></h1>
 
 
-{{ group.name }}
+
 <h4 class="col-8 light-background dark-text lifted rounded-2 p-2 m-2 mx-auto">
     The group owner is <span class="text-uppercase">{{ group.creator }}</span>!
 </h4>
@@ -16,28 +16,33 @@
     </div>
 </div>
 {% endfor %}
-{% if group.services.all  %}
-    <h6>Group Services:</h6>
-    {% for service in group.services.all %}
-    <div class="d-flex flex-column input-group-text lifted p-0 m-0 h-75">
-        <div class="h-100 my-1">
-            {{ service.name }}
-        </div>
+{% if group.services.all %}
+<h6>Group Services:</h6>
+{% for service in group.services.all %}
+<div class="d-flex flex-column input-group-text lifted p-0 m-0 h-75">
+    <div class="h-100 my-1">
+        {{ service.name }}
     </div>
-    {% endfor %}
-    <br>
-    <h6>Top Rated Show:</h6>
-    <img src="{{ show.poster }}" alt="">
-    <h6>Title</h6>
-    <article>{{ show.title }}</article>
-    <h6>Plot</h6>
-    <article>{{ show.plot_overview }}</article>
-    <h6>Trailer</h6>
-    <iframe width="560" height="315" src="{{ trailer_url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    {% if group.creator == user.profile %}
-    <a href="{% url 'group_delete' group.id %}">Delete Group</a>
-    {% endif %}
+</div>
+{% endfor %}
+<br>
+<h6>Top Rated Show:</h6>
+<h6 class="display-5">{{ show.title }}</h6>
+<div class="row row-no-margin lifted mx-auto rounded-2 col-9 light-background m-3">
+    <div class="col-xs-12 col-sm-2 col-no-padding mx-auto my-auto p-3">
+        <img src="{{ show.poster }}" alt="">
+    </div>
+    <div class="col-xs-12 col-sm-7 col-no-padding mx-auto p-3">
+        <iframe width="560" height="315" src="{{ trailer_url }}" title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+    </div>
+</div>
+<article class="mx-auto my-auto">{{ show.plot_overview }}</article>
+{% if group.creator == user.profile %}
+<a href="{% url 'group_delete' group.id %}">Delete Group</a>
+{% endif %}
 {% else %}
-    <h6>No Group Services</h6>
+<h6>No Group Services</h6>
 {% endif %}
 {% endblock %}
