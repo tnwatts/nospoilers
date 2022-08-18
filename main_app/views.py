@@ -83,13 +83,13 @@ def create_group(request, profile_id):
 def group_home(request, group_id):
   group = Group.objects.get(id=group_id)
   api_id = group.services.all().values_list('api_id')
+  print(api_id[0])
   watchmode_api_key = os.environ['WATCHMODE_API_KEY']
-  with urllib.request.urlopen(f"https://api.watchmode.com/v1/list-titles/?apiKey={watchmode_api_key}&source_ids={api_id[0]}&sort_by=popularity_desc&types=tv_series") as url:
+  with urllib.request.urlopen(f"https://api.watchmode.com/v1/list-titles/?apiKey={watchmode_api_key}&source_ids={api_id[0][0]}&sort_by=popularity_desc&types=tv_series") as url:
     data = json.loads(url.read().decode())
   show = data['titles'][0]
   with urllib.request.urlopen(f"https://api.watchmode.com/v1/title/{show['id']}/details/?apiKey={watchmode_api_key}") as url:
     data = json.loads(url.read().decode())
-    print(data)
   show_details = data
   trailer_url = show_details['trailer'].replace('watch?v=', 'embed/')
   return render(request, 'group/home.html', {'group' : group, 'show' : show_details, 'trailer_url' : trailer_url})
