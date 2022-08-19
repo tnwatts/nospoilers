@@ -34,7 +34,7 @@ Make watch groups with your friends and family to receive show recommendations!
 
 [Pitch Deck](https://docs.google.com/presentation/d/1-H63W54U2n3uemM6pY40CewSpWYZ2xJDMYKUFheXSOI/edit)
 
-[Go To Watch Buddy!](https://no-spoilers.herokuapp)
+[Go To Watch Buddy!](https://no-spoilers.herokuapp.com/)
 
 # Future Enhancements
 
